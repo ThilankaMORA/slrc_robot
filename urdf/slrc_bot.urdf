@@ -1,0 +1,759 @@
+<?xml version="1.0" ?>
+  <robot name="slrc_bot">
+
+  <link name="base_link">
+    <visual>
+      <geometry>
+          <box size="0.22 0.18 0.06"/>
+      </geometry>
+      <material name="red">
+        <color rgba="1 .0 .0 1" />
+      </material>
+    </visual>
+  <inertial>
+    <mass value="1" />
+    <inertia ixx="0.003"  ixy="0.0" ixz="0" iyy="0.00433" iyz="0" izz="0.006733"/>
+  </inertial>
+    <collision>
+      <geometry>
+        <box size="0.22 0.18 0.06"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="wheel_right_link">
+    <inertial>
+      <mass value="2" />
+      <inertia ixx="0.0006588" ixy="0.0" ixz="0" iyy="0.0006588" iyz="0" izz="0.00105625" />
+    </inertial>
+
+    <visual>
+      <geometry>
+          <cylinder radius="0.0325" length="0.028"/>
+      </geometry>
+      <material name="green">
+        <color rgba="0 1 0 1"/>
+      </material>
+    </visual>
+
+    <collision>
+      <geometry>
+        <cylinder radius="0.0325" length="0.028"/>
+      </geometry>
+      <surface>
+        <friction>
+          <ode>
+            <mu>0</mu>
+            <mu2>0</mu2>
+            <slip1>1.0</slip1>
+            <slip2>1.0</slip2>
+          </ode>
+        </friction>
+      </surface>
+      <contact_coefficients mu="1" kp="1e+13" kd="1.0"/>
+    </collision>
+  </link>
+
+  <joint name="wheel_right_joint" type="continuous">
+    <origin xyz="0.06 0.104 -0.03" rpy="1.57 0.0 0.0"/>
+    <parent link="base_link"/>
+    <child link="wheel_right_link"/>
+    <axis xyz="0.0 0.0 1.0"/>
+  </joint>
+
+  <link name="wheel_left_link">
+    <inertial>
+            <mass value="2" />
+            <inertia ixx="0.0006588" ixy="0.0" ixz="0" iyy="0.0006588" iyz="0" izz="0.00105625" />
+    </inertial>
+
+    <visual>
+      
+      <geometry>
+        <cylinder radius="0.0325" length="0.028"/>
+      </geometry>
+      <material name="green">
+        <color rgba="0 1 0 1"/>
+      </material>
+    </visual>
+
+    <collision>
+      <geometry>
+        <cylinder radius="0.0325" length="0.028"/>
+      </geometry>
+      <surface>
+        <friction>
+          <ode>
+            <mu>0</mu>
+            <mu2>0</mu2>
+            <slip1>1.0</slip1>
+            <slip2>1.0</slip2>
+          </ode>
+        </friction>
+      </surface>
+      <contact_coefficients mu="1" kp="1e+13" kd="1.0"/>
+    </collision>
+  </link>
+
+  <joint name="wheel_left_joint" type="continuous">
+    <origin xyz="0.06 -0.104 -0.03" rpy="-1.57 0.0 0.0"/>    
+    <parent link="base_link"/>
+    <child link="wheel_left_link"/>
+    <axis xyz="0.0 0.0 1.0"/>
+
+  </joint>
+
+
+
+  <link name="caster">
+    <inertial>
+            <mass value="1" />
+            <inertia ixx="0.00070416" ixy="0.0" ixz="0" iyy="0.00070416" iyz="0" izz="0.00070416" />
+    </inertial>
+
+    <visual>
+    
+      <geometry>
+        <sphere radius=".0325" />
+      </geometry>
+      <material name="blue">
+      <color rgba="0 0 1 1"/>
+      </material>
+    </visual>
+
+    <collision>
+      <geometry>
+        <sphere radius=".0325" />
+      </geometry>
+      <surface>
+        <friction>
+          <ode>
+            <mu>0</mu>
+            <mu2>0</mu2>
+            <slip1>1.0</slip1>
+            <slip2>1.0</slip2>
+          </ode>
+        </friction>
+      </surface>
+    </collision>
+  </link>
+
+  <joint name="caster_joint" type="continuous">
+    <origin xyz="-0.07 0.0 -0.03" rpy="0.0 0.0 0.0"/>
+    <axis xyz="0 0 1" />
+    <parent link="base_link"/>
+    <child link="caster"/>
+  </joint>
+
+<link name="laser_pannel">
+  <inertial>
+    <mass value="1e-5"/>
+    <inertia ixx="1e-6" ixy="0" ixz="0.0" iyy="1e-6" iyz="0.0" izz="1e-6"/>
+  </inertial>
+
+  <visual>
+    <geometry>
+        <box size="0.015 0.065 0.005"/>
+    </geometry>
+  <material name="blue"/>
+  </visual>
+
+  <collision>
+    <geometry>
+      <box size="0.015 0.065 0.005"/>    
+    </geometry>
+    <material name="gray">
+      <color rgba="0.5 0.5 0.5 1.0" />
+    </material>
+  </collision>
+
+</link>
+
+<joint name="laser_pannel_joint" type="fixed">
+  <origin xyz="-0.1175 0.0 -0.03" rpy="0.0 0.0 0.0"/>
+  <parent link="base_link"/>
+  <child link="laser_pannel"/>
+</joint>
+
+<link name="ir_1">
+  <collision>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <geometry>
+      <box size="0.001 0.002 0.002"/>
+    </geometry>
+  </collision>
+  <visual>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <geometry>
+      <box size="0.001 0.002 0.002"/>
+    </geometry>
+  </visual>
+  <inertial>
+    <mass value="1e-5" />
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6" />
+  </inertial>
+</link>
+
+<joint name="ir_1_joint" type="fixed">
+  <axis xyz="0 1 0" />
+  <origin xyz="0 0.0284375 -0.0025" rpy="0 1.57 0" />
+  <parent link="laser_pannel"/>
+  <child link="ir_1"/>
+</joint>
+
+<link name="ir_2">
+  <collision>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <geometry>
+      <box size="0.001 0.002 0.002"/>
+    </geometry>
+  </collision>
+  <visual>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <geometry>
+      <box size="0.001 0.002 0.002"/>
+    </geometry>
+  </visual>
+  <inertial>
+    <mass value="1e-5" />
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6" />
+  </inertial>
+</link>
+
+<joint name="ir_2_joint" type="fixed">
+  <axis xyz="0 1 0" />
+  <origin xyz="0 0.0203125 -0.0025" rpy="0 1.57 0" />
+  <parent link="laser_pannel"/>
+  <child link="ir_2"/>
+</joint>
+
+<link name="ir_3">
+  <collision>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <geometry>
+      <box size="0.001 0.002 0.002"/>
+    </geometry>
+  </collision>
+  <visual>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <geometry>
+      <box size="0.001 0.002 0.002"/>
+    </geometry>
+  </visual>
+  <inertial>
+    <mass value="1e-5" />
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6" />
+  </inertial>
+</link>
+
+<joint name="ir_3_joint" type="fixed">
+  <axis xyz="0 1 0" />
+  <origin xyz="0 0.0121875 -0.0025" rpy="0 1.57 0" />
+  <parent link="laser_pannel"/>
+  <child link="ir_3"/>
+</joint>
+
+<link name="ir_4">
+  <collision>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <geometry>
+      <box size="0.001 0.002 0.002"/>
+    </geometry>
+  </collision>
+  <visual>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <geometry>
+      <box size="0.001 0.002 0.002"/>
+    </geometry>
+  </visual>
+  <inertial>
+    <mass value="1e-5" />
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6" />
+  </inertial>
+</link>
+
+<joint name="ir_4_joint" type="fixed">
+  <axis xyz="0 1 0" />
+  <origin xyz="0 0.0040625 -0.0025" rpy="0 1.57 0" />
+  <parent link="laser_pannel"/>
+  <child link="ir_4"/>
+</joint>
+
+<link name="ir_5">
+  <collision>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <geometry>
+      <box size="0.001 0.002 0.002"/>
+    </geometry>
+  </collision>
+  <visual>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <geometry>
+      <box size="0.001 0.002 0.002"/>
+    </geometry>
+  </visual>
+  <inertial>
+    <mass value="1e-5" />
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6" />
+  </inertial>
+</link>
+
+<joint name="ir_5_joint" type="fixed">
+  <axis xyz="0 1 0" />
+  <origin xyz="0 -0.0040625 -0.0025" rpy="0 1.57 0" />
+  <parent link="laser_pannel"/>
+  <child link="ir_5"/>
+</joint>
+
+<link name="ir_6">
+  <collision>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <geometry>
+      <box size="0.001 0.002 0.002"/>
+    </geometry>
+  </collision>
+  <visual>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <geometry>
+      <box size="0.001 0.002 0.002"/>
+    </geometry>
+  </visual>
+  <inertial>
+    <mass value="1e-5" />
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6" />
+  </inertial>
+</link>
+
+<joint name="ir_6_joint" type="fixed">
+  <axis xyz="0 1 0" />
+  <origin xyz="0 -0.0121875 -0.0025" rpy="0 1.57 0" />
+  <parent link="laser_pannel"/>
+  <child link="ir_6"/>
+</joint>
+
+<link name="ir_7">
+  <collision>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <geometry>
+      <box size="0.001 0.002 0.002"/>
+    </geometry>
+  </collision>
+  <visual>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <geometry>
+      <box size="0.001 0.002 0.002"/>
+    </geometry>
+  </visual>
+  <inertial>
+    <mass value="1e-5" />
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6" />
+  </inertial>
+</link>
+
+<joint name="ir_7_joint" type="fixed">
+  <axis xyz="0 1 0" />
+  <origin xyz="0 -0.0203125 -0.0025" rpy="0 1.57 0" />
+  <parent link="laser_pannel"/>
+  <child link="ir_7"/>
+</joint>
+
+<link name="ir_8">
+  <collision>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <geometry>
+      <box size="0.001 0.002 0.002"/>
+    </geometry>
+  </collision>
+  <visual>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <geometry>
+      <box size="0.001 0.002 0.002"/>
+    </geometry>
+  </visual>
+  <inertial>
+    <mass value="1e-5" />
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6" />
+  </inertial>
+</link>
+
+<joint name="ir_8_joint" type="fixed">
+  <axis xyz="0 1 0" />
+  <origin xyz="0 -0.0284375 -0.0025" rpy="0 1.57 0" />
+  <parent link="laser_pannel"/>
+  <child link="ir_8"/>
+</joint>
+
+<!-- Gazebo colors to links as upper defined colors are only visible in RVIZ-->
+<gazebo reference="base_link">
+  <material>Gazebo/Orange</material>
+</gazebo>
+<gazebo reference="caster">
+  <material>Gazebo/Black</material>
+</gazebo>
+<gazebo reference="wheel_right_link">
+  <material>Gazebo/Blue</material>
+</gazebo>
+<gazebo reference="wheel_left_link">
+  <material>Gazebo/Blue</material>
+</gazebo> 
+<gazebo reference="laser_pannel">
+  <material>Gazebo/Blue</material>
+</gazebo> 
+<gazebo reference="ir_1">
+  <material>Gazebo/Black</material>
+</gazebo> 
+<gazebo reference="ir_2">
+  <material>Gazebo/Black</material>
+</gazebo> 
+<gazebo reference="ir_3">
+  <material>Gazebo/Black</material>
+</gazebo> 
+<gazebo reference="ir_4">
+  <material>Gazebo/Black</material>
+</gazebo> 
+<gazebo reference="ir_5">
+  <material>Gazebo/Black</material>
+</gazebo> 
+<gazebo reference="ir_6">
+  <material>Gazebo/Black</material>
+</gazebo> 
+<gazebo reference="ir_7">
+  <material>Gazebo/Black</material>
+</gazebo>
+<gazebo reference="ir_8">
+  <material>Gazebo/Black</material>
+</gazebo>  
+<!-- DIFFENERNTIAL DRIVEEEEEEEEEEEEE -->
+
+<gazebo>
+  <plugin name="differential_drive_controller" filename="libgazebo_ros_diff_drive.so">
+      <leftJoint>wheel_left_joint</leftJoint>
+      <rightJoint>wheel_right_joint</rightJoint>
+      <legacyMode>false</legacyMode>
+      
+      <robotbase_linkFrame>base_link</robotbase_linkFrame>
+      <wheelSeparation>0.25</wheelSeparation>
+      <wheelDiameter>0.07</wheelDiameter>
+      <publishWheelJointState>true</publishWheelJointState>
+  </plugin>
+</gazebo>
+
+ <gazebo>
+  <plugin name="joint_state_publisher" filename="libgazebo_ros_joint_state_publisher.so">
+      <jointName>caster_joint</jointName>
+  </plugin>
+</gazebo>
+
+<gazebo reference="ir_1">        
+  <sensor type="ray" name="TeraRanger">
+     <pose>0 0 0 0 0 0</pose>
+     <visualize>true</visualize>
+     <update_rate>50</update_rate>
+     <ray>
+        <scan>
+           <horizontal>
+              <samples>10</samples>
+              <resolution>1</resolution> 
+              <min_angle>-0.14835</min_angle>
+              <max_angle>0.14835</max_angle>
+           </horizontal>
+           <vertical>
+              <samples>10</samples>
+              <resolution>1</resolution> 
+              <min_angle>-0.14835</min_angle>
+              <max_angle>0.14835</max_angle> 
+           </vertical>
+        </scan>
+        <range>
+           <min>0.01</min>
+           <max>2</max>
+           <resolution>0.02</resolution>
+        </range>
+     </ray>
+     <plugin filename="libgazebo_ros_range.so" name="gazebo_ros_range">
+        <gaussianNoise>0.005</gaussianNoise>
+        <alwaysOn>true</alwaysOn>
+        <updateRate>50</updateRate>
+        <topicName>sensor/ir_1</topicName>
+        <frameName>base_link</frameName>
+        <radiation>INFRARED</radiation>
+        <fov>0.2967</fov>
+     </plugin>
+  </sensor>  
+</gazebo>
+
+<gazebo reference="ir_2">        
+  <sensor type="ray" name="TeraRanger">
+     <pose>0 0 0 0 0 0</pose>
+     <visualize>true</visualize>
+     <update_rate>50</update_rate>
+     <ray>
+        <scan>
+           <horizontal>
+              <samples>10</samples>
+              <resolution>1</resolution> 
+              <min_angle>-0.14835</min_angle>
+              <max_angle>0.14835</max_angle>
+           </horizontal>
+           <vertical>
+              <samples>10</samples>
+              <resolution>1</resolution> 
+              <min_angle>-0.14835</min_angle>
+              <max_angle>0.14835</max_angle> 
+           </vertical>
+        </scan>
+        <range>
+           <min>0.01</min>
+           <max>2</max>
+           <resolution>0.02</resolution>
+        </range>
+     </ray>
+     <plugin filename="libgazebo_ros_range.so" name="gazebo_ros_range">
+        <gaussianNoise>0.005</gaussianNoise>
+        <alwaysOn>true</alwaysOn>
+        <updateRate>50</updateRate>
+        <topicName>sensor/ir_2</topicName>
+        <frameName>base_link</frameName>
+        <radiation>INFRARED</radiation>
+        <fov>0.2967</fov>
+     </plugin>
+  </sensor>  
+</gazebo>
+
+<gazebo reference="ir_3">        
+  <sensor type="ray" name="TeraRanger">
+     <pose>0 0 0 0 0 0</pose>
+     <visualize>true</visualize>
+     <update_rate>50</update_rate>
+     <ray>
+        <scan>
+           <horizontal>
+              <samples>10</samples>
+              <resolution>1</resolution> 
+              <min_angle>-0.14835</min_angle>
+              <max_angle>0.14835</max_angle>
+           </horizontal>
+           <vertical>
+              <samples>10</samples>
+              <resolution>1</resolution> 
+              <min_angle>-0.14835</min_angle>
+              <max_angle>0.14835</max_angle> 
+           </vertical>
+        </scan>
+        <range>
+           <min>0.01</min>
+           <max>2</max>
+           <resolution>0.02</resolution>
+        </range>
+     </ray>
+     <plugin filename="libgazebo_ros_range.so" name="gazebo_ros_range">
+        <gaussianNoise>0.005</gaussianNoise>
+        <alwaysOn>true</alwaysOn>
+        <updateRate>50</updateRate>
+        <topicName>sensor/ir_3</topicName>
+        <frameName>base_link</frameName>
+        <radiation>INFRARED</radiation>
+        <fov>0.2967</fov>
+     </plugin>
+  </sensor>  
+</gazebo>
+
+<gazebo reference="ir_4">        
+  <sensor type="ray" name="TeraRanger">
+     <pose>0 0 0 0 0 0</pose>
+     <visualize>true</visualize>
+     <update_rate>50</update_rate>
+     <ray>
+        <scan>
+           <horizontal>
+              <samples>10</samples>
+              <resolution>1</resolution> 
+              <min_angle>-0.14835</min_angle>
+              <max_angle>0.14835</max_angle>
+           </horizontal>
+           <vertical>
+              <samples>10</samples>
+              <resolution>1</resolution> 
+              <min_angle>-0.14835</min_angle>
+              <max_angle>0.14835</max_angle> 
+           </vertical>
+        </scan>
+        <range>
+           <min>0.01</min>
+           <max>2</max>
+           <resolution>0.02</resolution>
+        </range>
+     </ray>
+     <plugin filename="libgazebo_ros_range.so" name="gazebo_ros_range">
+        <gaussianNoise>0.005</gaussianNoise>
+        <alwaysOn>true</alwaysOn>
+        <updateRate>50</updateRate>
+        <topicName>sensor/ir_4</topicName>
+        <frameName>base_link</frameName>
+        <radiation>INFRARED</radiation>
+        <fov>0.2967</fov>
+     </plugin>
+  </sensor>  
+</gazebo>
+
+<gazebo reference="ir_5">        
+  <sensor type="ray" name="TeraRanger">
+     <pose>0 0 0 0 0 0</pose>
+     <visualize>true</visualize>
+     <update_rate>50</update_rate>
+     <ray>
+        <scan>
+           <horizontal>
+              <samples>10</samples>
+              <resolution>1</resolution> 
+              <min_angle>-0.14835</min_angle>
+              <max_angle>0.14835</max_angle>
+           </horizontal>
+           <vertical>
+              <samples>10</samples>
+              <resolution>1</resolution> 
+              <min_angle>-0.14835</min_angle>
+              <max_angle>0.14835</max_angle> 
+           </vertical>
+        </scan>
+        <range>
+           <min>0.01</min>
+           <max>2</max>
+           <resolution>0.02</resolution>
+        </range>
+     </ray>
+     <plugin filename="libgazebo_ros_range.so" name="gazebo_ros_range">
+        <gaussianNoise>0.005</gaussianNoise>
+        <alwaysOn>true</alwaysOn>
+        <updateRate>50</updateRate>
+        <topicName>sensor/ir_5</topicName>
+        <frameName>base_link</frameName>
+        <radiation>INFRARED</radiation>
+        <fov>0.2967</fov>
+     </plugin>
+  </sensor>  
+</gazebo>
+
+<gazebo reference="ir_6">        
+  <sensor type="ray" name="TeraRanger">
+     <pose>0 0 0 0 0 0</pose>
+     <visualize>true</visualize>
+     <update_rate>50</update_rate>
+     <ray>
+        <scan>
+           <horizontal>
+              <samples>10</samples>
+              <resolution>1</resolution> 
+              <min_angle>-0.14835</min_angle>
+              <max_angle>0.14835</max_angle>
+           </horizontal>
+           <vertical>
+              <samples>10</samples>
+              <resolution>1</resolution> 
+              <min_angle>-0.14835</min_angle>
+              <max_angle>0.14835</max_angle> 
+           </vertical>
+        </scan>
+        <range>
+           <min>0.01</min>
+           <max>2</max>
+           <resolution>0.02</resolution>
+        </range>
+     </ray>
+     <plugin filename="libgazebo_ros_range.so" name="gazebo_ros_range">
+        <gaussianNoise>0.005</gaussianNoise>
+        <alwaysOn>true</alwaysOn>
+        <updateRate>50</updateRate>
+        <topicName>sensor/ir_6</topicName>
+        <frameName>base_link</frameName>
+        <radiation>INFRARED</radiation>
+        <fov>0.2967</fov>
+     </plugin>
+  </sensor>  
+</gazebo>
+
+<gazebo reference="ir_7">        
+  <sensor type="ray" name="TeraRanger">
+     <pose>0 0 0 0 0 0</pose>
+     <visualize>true</visualize>
+     <update_rate>50</update_rate>
+     <ray>
+        <scan>
+           <horizontal>
+              <samples>10</samples>
+              <resolution>1</resolution> 
+              <min_angle>-0.14835</min_angle>
+              <max_angle>0.14835</max_angle>
+           </horizontal>
+           <vertical>
+              <samples>10</samples>
+              <resolution>1</resolution> 
+              <min_angle>-0.14835</min_angle>
+              <max_angle>0.14835</max_angle> 
+           </vertical>
+        </scan>
+        <range>
+           <min>0.01</min>
+           <max>2</max>
+           <resolution>0.02</resolution>
+        </range>
+     </ray>
+     <plugin filename="libgazebo_ros_range.so" name="gazebo_ros_range">
+        <gaussianNoise>0.005</gaussianNoise>
+        <alwaysOn>true</alwaysOn>
+        <updateRate>50</updateRate>
+        <topicName>sensor/ir_7</topicName>
+        <frameName>base_link</frameName>
+        <radiation>INFRARED</radiation>
+        <fov>0.2967</fov>
+     </plugin>
+  </sensor>  
+</gazebo>
+
+<gazebo reference="ir_8">        
+  <sensor type="ray" name="TeraRanger">
+     <pose>0 0 0 0 0 0</pose>
+     <visualize>true</visualize>
+     <update_rate>50</update_rate>
+     <ray>
+        <scan>
+           <horizontal>
+              <samples>10</samples>
+              <resolution>1</resolution> 
+              <min_angle>-0.14835</min_angle>
+              <max_angle>0.14835</max_angle>
+           </horizontal>
+           <vertical>
+              <samples>10</samples>
+              <resolution>1</resolution> 
+              <min_angle>-0.14835</min_angle>
+              <max_angle>0.14835</max_angle> 
+           </vertical>
+        </scan>
+        <range>
+           <min>0.01</min>
+           <max>2</max>
+           <resolution>0.02</resolution>
+        </range>
+     </ray>
+     <plugin filename="libgazebo_ros_range.so" name="gazebo_ros_range">
+        <gaussianNoise>0.005</gaussianNoise>
+        <alwaysOn>true</alwaysOn>
+        <updateRate>50</updateRate>
+        <topicName>sensor/ir_8</topicName>
+        <frameName>base_link</frameName>
+        <radiation>INFRARED</radiation>
+        <fov>0.2967</fov>
+     </plugin>
+  </sensor>  
+</gazebo>
+
+</robot>
