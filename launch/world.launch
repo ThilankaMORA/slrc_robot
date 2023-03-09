@@ -2,7 +2,7 @@
 <launch>
 
     <include file="$(find gazebo_ros)/launch/empty_world.launch">
-        <arg name="world_name" value="$(find slrc_robot)/worlds/lfm.world"/>
+        <arg name="world_name" value="$(find slrc_robot)/worlds/line_follow.world"/>
     </include>
 
 </launch>
